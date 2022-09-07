@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, request
-from BL.student_bl import StudentBl
+from BL.students_bl import StudentsBl
 
 students = Blueprint("students", __name__)
 
-students_bl = StudentBl()
+students_bl = StudentsBl()
 
 @students.route('/', methods=["GET"])
 def get_all_students():
@@ -27,16 +27,16 @@ def search_student_by_name():
 @students.route('/', methods=["POST"])
 def create_student():
     student = request.json
-    students_bl.create_student(student)
-    return jsonify("Created !")
+    res = students_bl.create_student(student)
+    return jsonify(res)
 
 @students.route('/<string:id>', methods=["PUT"])
 def update_student(id):
     student = request.json
-    students_bl.update_student(id,student)
-    return jsonify("Updated !")
+    res = students_bl.update_student(id,student)
+    return jsonify(res)
 
 @students.route('/<string:id>', methods=["DELETE"])
 def delete_student(id):
-    students_bl.delete_student(id)
-    return jsonify("Deleted !")
+    res = students_bl.delete_student(id)
+    return jsonify(res)

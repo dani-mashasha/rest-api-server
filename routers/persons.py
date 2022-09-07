@@ -1,10 +1,9 @@
-import json
 from flask import jsonify,request, Blueprint
-from BL.person_bl import PersonBl
+from BL.persons_bl import PersonsBl
 
 persons = Blueprint('persons', __name__)
 
-persons_bl = PersonBl()
+persons_bl = PersonsBl()
 
 
 @persons.route("/", methods=['GET'])

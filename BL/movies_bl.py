@@ -1,12 +1,11 @@
-import requests
+from DAL.movies_ws_DAL import MoviesWsDAL
 
-class MovieBl:
+class MoviesBl:
     def __init__(self):
-        self._url = "https://api.tvmaze.com/shows"
+        self._movies = MoviesWsDAL()
 
     def get_movies(self):
-        resp = requests.get(self._url)
-        movies = resp.json()
+        movies = self._movies.get_all_movies()
 
         return list(map(lambda movie: {"name": movie["name"], "rating": movie["rating"]["average"]} ,movies))
 

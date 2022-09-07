@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from bson import ObjectId
 
-class StudentBl():
+class StudentsDbDAL():
     def __init__(self):
         self._client = MongoClient(port=27017)
         self._db = self._client["studentsDB"]
@@ -9,11 +9,8 @@ class StudentBl():
 
     def get_all_students(self):
         students =list(self._student_collection.find({}))
-        for stud in students:
-            stud["_id"] = str(stud["_id"])
         return students
-
-        
+    
     def get_student_by_id(self, id):
         student = self._student_collection.find_one({"_id": ObjectId(id)})
         student["_id"] = str(student["_id"])
@@ -30,9 +27,13 @@ class StudentBl():
 
     def create_student(self, student_obj):
         self._student_collection.insert_one(student_obj)
+        return 'Created with ID' + str(student_obj["_id"])
 
     def update_student(self, id, student_obj):
         self._student_collection.find_one_and_update({"_id": ObjectId(id)} , {"$set": student_obj})
+        return 'Updated!'
 
     def delete_student(self, id):
         self._student_collection.delete_one({"_id": ObjectId(id) })
+        return 'Deleted!' 
+   
